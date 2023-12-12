@@ -1,6 +1,8 @@
 package com.github.k1melo.mysticwoods.screens
 
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
@@ -16,7 +18,7 @@ import ktx.log.logger
 
 class GameScreen : KtxScreen {
 
-    private val texture : Texture = Texture("assets/graphics/player.png")
+    private val textureAtlas: TextureAtlas = TextureAtlas("assets/graphics/gameObjects.atlas")
 
     private val stage: Stage = Stage(ExtendViewport(16f, 9f))
     private val world: World = World{
@@ -32,9 +34,18 @@ class GameScreen : KtxScreen {
 
         world.entity {
             add<ImageComponent> {
-                image = Image(texture).apply {
+                image = Image(TextureRegion(textureAtlas.findRegion("player"), 0, 48, 48, 48)).apply {
                     setPosition(1f, 1f)
                     setSize(4f, 4f)
+                }
+            }
+        }
+
+        world.entity {
+            add<ImageComponent> {
+                image = Image(TextureRegion(textureAtlas.findRegion("slime"), 0, 0, 32, 32)).apply {
+                    setPosition(12f, 1f)
+                    setSize(2f, 2f)
                 }
             }
         }
@@ -50,7 +61,7 @@ class GameScreen : KtxScreen {
 
     override fun dispose() {
         stage.disposeSafely()
-        texture.disposeSafely()
+        textureAtlas.disposeSafely()
         world.dispose()
     }
 

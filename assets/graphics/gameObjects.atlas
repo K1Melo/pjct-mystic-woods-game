@@ -1,0 +1,7 @@
+gameObjects.png
+size:512,512
+repeat:none
+player
+bounds:0,0,288,480
+slime
+bounds:288,320,224,160
