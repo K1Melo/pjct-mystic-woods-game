@@ -5,15 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 
 data class AnimationComponent(
-    var atlasKey : String = "",
+    var model: AnimationModel = AnimationModel.UNDEFINED,
     var stateTime : Float = 0f,
     var playMode: PlayMode = PlayMode.LOOP
 ) {
     lateinit var animation: Animation<TextureRegionDrawable>
     var nextAnimation : String = NO_ANIMATION
-    fun nextAnimation(atlasKey: String, animationType: AnimationType) {
-        this.atlasKey = atlasKey
-        nextAnimation = "$atlasKey/${animationType.atlasKey}"
+    fun nextAnimation(model: AnimationModel, animationType: AnimationType) {
+        this.model = model
+        nextAnimation = "${model.atlasKey}/${animationType.atlasKey}"
     }
 
     companion object {

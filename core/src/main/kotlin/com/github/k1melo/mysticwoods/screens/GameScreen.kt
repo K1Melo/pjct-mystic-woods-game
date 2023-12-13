@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.github.k1melo.mysticwoods.component.AnimationComponent
-import com.github.k1melo.mysticwoods.component.AnimationType
-import com.github.k1melo.mysticwoods.component.ImageComponent
-import com.github.k1melo.mysticwoods.component.ImageComponentListener
+import com.github.k1melo.mysticwoods.component.*
 import com.github.k1melo.mysticwoods.system.AnimationSystem
 import com.github.k1melo.mysticwoods.system.RenderSystem
 import com.github.quillraven.fleks.World
@@ -45,7 +42,7 @@ class GameScreen : KtxScreen {
                 }
             }
             add<AnimationComponent> {
-                nextAnimation("player", AnimationType.IDLE)
+                nextAnimation(AnimationModel.PLAYER, AnimationType.RUN)
             }
         }
 
@@ -57,7 +54,7 @@ class GameScreen : KtxScreen {
                 }
             }
             add<AnimationComponent> {
-                nextAnimation("slime", AnimationType.RUN)
+                nextAnimation(AnimationModel.SLIME, AnimationType.IDLE)
             }
         }
     }
