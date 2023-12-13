@@ -8,8 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.Scaling
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.github.k1melo.mysticwoods.component.AnimationComponent
+import com.github.k1melo.mysticwoods.component.AnimationType
 import com.github.k1melo.mysticwoods.component.ImageComponent
 import com.github.k1melo.mysticwoods.component.ImageComponentListener
+import com.github.k1melo.mysticwoods.system.AnimationSystem
 import com.github.k1melo.mysticwoods.system.RenderSystem
 import com.github.quillraven.fleks.World
 import ktx.app.KtxScreen
@@ -18,14 +21,16 @@ import ktx.log.logger
 
 class GameScreen : KtxScreen {
 
-    private val textureAtlas: TextureAtlas = TextureAtlas("assets/graphics/gameObjects.atlas")
+    private val textureAtlas: TextureAtlas = TextureAtlas("assets/graphics/gameFrames.atlas")
 
     private val stage: Stage = Stage(ExtendViewport(16f, 9f))
     private val world: World = World{
         inject(stage)
+        inject(textureAtlas)
 
         componentListener<ImageComponentListener>()
 
+        system<AnimationSystem>()
         system<RenderSystem>()
     }
 
@@ -34,19 +39,25 @@ class GameScreen : KtxScreen {
 
         world.entity {
             add<ImageComponent> {
-                image = Image(TextureRegion(textureAtlas.findRegion("player"), 0, 48, 48, 48)).apply {
+                image = Image().apply {
                     setPosition(1f, 1f)
                     setSize(4f, 4f)
                 }
+            }
+            add<AnimationComponent> {
+                nextAnimation("player", AnimationType.IDLE)
             }
         }
 
         world.entity {
             add<ImageComponent> {
-                image = Image(TextureRegion(textureAtlas.findRegion("slime"), 0, 0, 32, 32)).apply {
+                image = Image().apply {
                     setPosition(12f, 1f)
                     setSize(2f, 2f)
                 }
+            }
+            add<AnimationComponent> {
+                nextAnimation("slime", AnimationType.RUN)
             }
         }
     }
