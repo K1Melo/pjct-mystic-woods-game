@@ -12,6 +12,7 @@ class MysticWoods : KtxGame<KtxScreen>() {
         Gdx.app.logLevel = Application.LOG_DEBUG
         addScreen(GameScreen())
         setScreen<GameScreen>()
+
     }
 
     companion object {
