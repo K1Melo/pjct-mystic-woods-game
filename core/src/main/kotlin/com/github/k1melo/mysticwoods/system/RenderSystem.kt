@@ -35,14 +35,15 @@ class RenderSystem(
     override fun handle(event: Event): Boolean {
         when(event) {
              is MapChangeEvent -> {
+                 bgdLayers.clear()
+                 fgdLayers.clear()
+
                 event.map.forEachLayer<TiledMapTileLayer> { layer ->
-
-                        if (layer.name.startsWith("fgd_")) {
-                            fgdLayers.add(layer)
-                        } else {
-                            bgdLayers.add(layer)
-                        }
-
+                    if (layer.name.startsWith("fgd_")) {
+                        fgdLayers.add(layer)
+                    } else {
+                        bgdLayers.add(layer)
+                    }
                 }
                 return true
             }

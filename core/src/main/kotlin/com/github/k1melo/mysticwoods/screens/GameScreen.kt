@@ -43,6 +43,7 @@ class GameScreen : KtxScreen {
                 stage.addListener(system)
             }
         }
+
         val tiledMap = TmxMapLoader().load("map/map1.tmx")
         stage.fire(MapChangeEvent(tiledMap))
 
