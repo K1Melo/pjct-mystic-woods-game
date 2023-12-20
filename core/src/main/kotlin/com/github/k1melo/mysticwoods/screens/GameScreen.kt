@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.github.k1melo.mysticwoods.component.*
 import com.github.k1melo.mysticwoods.event.MapChangeEvent
 import com.github.k1melo.mysticwoods.event.fire
+import com.github.k1melo.mysticwoods.input.PlayerKeyboardInputProcessor
 import com.github.k1melo.mysticwoods.system.*
 import com.github.quillraven.fleks.World
 import ktx.app.KtxScreen
@@ -38,6 +39,7 @@ class GameScreen : KtxScreen {
         componentListener<PhysicComponent.Companion.PhysicComponentListener>()
 
         system<EntitySpawnSystem>()
+        system<MoveSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<RenderSystem>()
@@ -56,6 +58,7 @@ class GameScreen : KtxScreen {
         currentMap = TmxMapLoader().load("map/map1.tmx")
         stage.fire(MapChangeEvent(currentMap!!))
 
+        PlayerKeyboardInputProcessor(entityWorld, entityWorld.mapper())
     }
 
     override fun resize(width: Int, height: Int) {

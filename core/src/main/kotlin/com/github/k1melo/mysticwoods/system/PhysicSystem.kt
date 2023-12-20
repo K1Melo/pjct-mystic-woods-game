@@ -34,6 +34,11 @@ class PhysicSystem (
         val physicComponent = physicComponent[entity]
         val imageComponent = imageComponent[entity]
 
+        if (!physicComponent.impulse.isZero) {
+            physicComponent.body.applyLinearImpulse(physicComponent.impulse, physicComponent.body.worldCenter, true)
+            physicComponent.impulse.setZero()
+        }
+
         val (bodyX, bodyY) = physicComponent.body.position
         imageComponent.image.run {
             setPosition((bodyX - width * 0.5f), (bodyY - height * 0.5f))

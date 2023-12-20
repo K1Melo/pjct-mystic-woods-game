@@ -58,6 +58,17 @@ class EntitySpawnSystem(
 
                     }
                 }
+
+                if (config.speedScaling > 0f) {
+                    add<MoveComponent> {
+                        speed = DEFAULT_SPEED * config.speedScaling
+                    }
+                }
+
+                if (type == "Player") {
+                    add<PlayerComponent>()
+                }
+
             }
         }
 
