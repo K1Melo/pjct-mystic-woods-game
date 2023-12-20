@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="9">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="15">
  <tileset firstgid="1" name="map" tilewidth="16" tileheight="16" spacing="4" margin="2" tilecount="150" columns="25">
   <image source="map.png" width="512" height="128"/>
  </tileset>
  <tileset firstgid="151" name="entities" tilewidth="48" tileheight="48" tilecount="2" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0">
-   <image width="48" height="48" source="../../assets_raw/player/idle_00.png"/>
+  <tile id="2">
+   <image width="48" height="48" source="player/idle_00.png"/>
   </tile>
-  <tile id="1">
-   <image width="32" height="32" source="../../assets_raw/slime/idle_00.png"/>
+  <tile id="3">
+   <image width="32" height="32" source="slime/idle_00.png"/>
   </tile>
  </tileset>
  <layer id="1" name="ground" width="32" height="18">
@@ -28,9 +28,11 @@
   </data>
  </layer>
  <objectgroup id="4" name="entities">
-  <object id="1" type="Player" gid="151" x="20.6667" y="268" width="48" height="48"/>
-  <object id="2" type="Slime" gid="152" x="124.667" y="186.667" width="32" height="32"/>
-  <object id="5" type="Slime" gid="152" x="88" y="100" width="32" height="32"/>
-  <object id="8" type="Slime" gid="152" x="46" y="227" width="32" height="32"/>
+  <object id="9" type="Player" gid="153" x="32" y="258" width="48" height="48"/>
+  <object id="10" type="Slime" gid="154" x="115" y="238" width="32" height="32"/>
+  <object id="11" type="Slime" gid="154" x="16" y="177" width="32" height="32"/>
+  <object id="12" type="Slime" gid="154" x="167" y="108" width="32" height="32"/>
+  <object id="13" type="Slime" gid="154" x="313" y="204" width="32" height="32"/>
+  <object id="14" type="Slime" gid="154" x="392" y="102" width="32" height="32"/>
  </objectgroup>
 </map>

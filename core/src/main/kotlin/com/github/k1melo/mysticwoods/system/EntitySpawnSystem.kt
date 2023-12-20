@@ -2,18 +2,23 @@ package com.github.k1melo.mysticwoods.system
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.BodyDef
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.Scaling
 import com.github.k1melo.mysticwoods.MysticWoods
 import com.github.k1melo.mysticwoods.component.*
+import com.github.k1melo.mysticwoods.component.PhysicComponent.Companion.physicComponentFromImage
 import com.github.k1melo.mysticwoods.event.MapChangeEvent
+import com.github.k1melo.mysticwoods.screens.GameScreen
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
 import ktx.app.gdxError
+import ktx.box2d.box
 import ktx.math.vec2
 import ktx.tiled.layer
 import ktx.tiled.type
@@ -22,6 +27,7 @@ import ktx.tiled.y
 
 @AllOf([SpawnComponent::class])
 class EntitySpawnSystem(
+    private val physicWorld: World,
     private val atlas : TextureAtlas,
     private val spawnComponent : ComponentMapper<SpawnComponent>
 ) : EventListener, IteratingSystem() {
@@ -34,7 +40,7 @@ class EntitySpawnSystem(
             val relativeSize = size(config.model)
 
             world.entity {
-                add<ImageComponent> {
+                val imageComp = add<ImageComponent> {
                     image = Image().apply {
                         setPosition(location.x, location.y)
                         setSize(relativeSize.x, relativeSize.y)
@@ -44,6 +50,13 @@ class EntitySpawnSystem(
 
                 add<AnimationComponent> {
                     nextAnimation(config.model, AnimationType.IDLE)
+                }
+
+                physicComponentFromImage(physicWorld, imageComp.image, BodyDef.BodyType.DynamicBody) {
+                    physicComponent, width, height ->  box(width, height) {
+                        isSensor = false
+
+                    }
                 }
             }
         }
