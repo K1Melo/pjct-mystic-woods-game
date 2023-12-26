@@ -42,6 +42,7 @@ class GameScreen : KtxScreen {
         system<MoveSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
+        system<CameraSystem>()
         system<RenderSystem>()
         system<DebugSystem>()
     }

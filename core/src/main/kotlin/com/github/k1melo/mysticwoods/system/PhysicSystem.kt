@@ -1,5 +1,6 @@
 package com.github.k1melo.mysticwoods.system
 
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.World
 import com.github.k1melo.mysticwoods.component.ImageComponent
 import com.github.k1melo.mysticwoods.component.PhysicComponent
@@ -32,16 +33,25 @@ class PhysicSystem (
 
     override fun onTickEntity(entity: Entity) {
         val physicComponent = physicComponent[entity]
-        val imageComponent = imageComponent[entity]
+
+
+        physicComponent.prevPos.set(physicComponent.body.position)
 
         if (!physicComponent.impulse.isZero) {
             physicComponent.body.applyLinearImpulse(physicComponent.impulse, physicComponent.body.worldCenter, true)
             physicComponent.impulse.setZero()
         }
 
-        val (bodyX, bodyY) = physicComponent.body.position
+    }
+
+    override fun onAlphaEntity(entity: Entity, alpha: Float) {
+        val physicComponent = physicComponent[entity]
+        val imageComponent = imageComponent[entity]
+
+        val (prevX, prevY) = physicComponent.prevPos
+         val (bodyX, bodyY) = physicComponent.body.position
         imageComponent.image.run {
-            setPosition((bodyX - width * 0.5f), (bodyY - height * 0.5f))
+            setPosition((MathUtils.lerp(prevX, bodyX, alpha) - width * 0.5f), (MathUtils.lerp(prevY, bodyY, alpha) - height * 0.5f))
         }
     }
 
