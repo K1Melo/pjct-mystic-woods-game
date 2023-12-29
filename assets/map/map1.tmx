@@ -2,6 +2,62 @@
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="18">
  <tileset firstgid="1" name="map" tilewidth="16" tileheight="16" spacing="4" margin="2" tilecount="150" columns="25">
   <image source="map.png" width="512" height="128"/>
+  <tile id="12">
+   <objectgroup draworder="index" id="3">
+    <object id="5" x="3.9983" y="11.0591" width="8.9749" height="4.80647"/>
+    <object id="7" x="6.08252" y="7.9966" width="5.82731" height="2.93492"/>
+   </objectgroup>
+  </tile>
+  <tile id="33">
+   <objectgroup draworder="index" id="3">
+    <object id="2" x="3.0622" y="0.255183" width="12.8017" height="14.6305"/>
+   </objectgroup>
+  </tile>
+  <tile id="34">
+   <objectgroup draworder="index" id="2">
+    <object id="6" x="0" y="0" width="16" height="10"/>
+   </objectgroup>
+  </tile>
+  <tile id="37">
+   <objectgroup draworder="index" id="5">
+    <object id="9" x="0.0850702" y="0.0850702" width="13.8664" height="14.8447"/>
+   </objectgroup>
+  </tile>
+  <tile id="39">
+   <objectgroup draworder="index" id="2">
+    <object id="8" x="3.99787" y="3.0622" width="8.88889" height="10.8028"/>
+   </objectgroup>
+  </tile>
+  <tile id="50">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0.978203" y="2.97714" width="14.0776" height="10.9304"/>
+   </objectgroup>
+  </tile>
+  <tile id="79">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0" y="0" width="2" height="10"/>
+   </objectgroup>
+  </tile>
+  <tile id="100">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="12.0787" y="0" width="4.12547" height="6.76236"/>
+   </objectgroup>
+  </tile>
+  <tile id="102">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="0.127592" y="12.9718" width="15.8639" height="2.93461"/>
+   </objectgroup>
+  </tile>
+  <tile id="105">
+   <objectgroup draworder="index" id="2">
+    <object id="6" x="3.9983" y="0.127605" width="9.95321" height="11.8248"/>
+   </objectgroup>
+  </tile>
+  <tile id="110">
+   <objectgroup draworder="index" id="2">
+    <object id="1" x="3" y="0" width="10.8028" height="15.9915"/>
+   </objectgroup>
+  </tile>
  </tileset>
  <tileset firstgid="151" name="entities" tilewidth="48" tileheight="48" tilecount="3" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>

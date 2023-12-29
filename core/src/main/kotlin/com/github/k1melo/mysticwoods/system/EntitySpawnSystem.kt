@@ -57,8 +57,17 @@ class EntitySpawnSystem(
                     val h = height * config.physicScaling.y
 
                     box(w, h, config.physicOffset) {
-                        isSensor = false
+                        isSensor = config.bodyType != BodyDef.BodyType.StaticBody
 
+                    }
+
+                    if (config.bodyType != BodyDef.BodyType.StaticBody) {
+                        val collH = h * 0.4f
+                        val collOffset = vec2().apply {set(config.physicOffset) }
+
+                        collOffset.y -= h * 0.5f - collH * 0.5f
+
+                        box(w, collH, collOffset)
                     }
                 }
 
