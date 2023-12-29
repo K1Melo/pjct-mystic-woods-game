@@ -52,8 +52,11 @@ class EntitySpawnSystem(
                     nextAnimation(config.model, AnimationType.IDLE)
                 }
 
-                physicComponentFromImage(physicWorld, imageComp.image, BodyDef.BodyType.DynamicBody) {
-                    physicComponent, width, height ->  box(width, height) {
+                physicComponentFromImage(physicWorld, imageComp.image, config.bodyType) { physicComponent, width, height ->
+                    val w = width * config.physicScaling.x
+                    val h = height * config.physicScaling.y
+
+                    box(w, h, config.physicOffset) {
                         isSensor = false
 
                     }
@@ -77,8 +80,21 @@ class EntitySpawnSystem(
 
     private fun spawnConfiguration(type : String) : SpawnConfiguration = cachedConfigurations.getOrPut(type) {
         when(type) {
-            "Player" -> SpawnConfiguration(AnimationModel.PLAYER)
-            "Slime" -> SpawnConfiguration(AnimationModel.SLIME)
+            "Player" -> SpawnConfiguration(
+                AnimationModel.PLAYER,
+                physicScaling = vec2(0.3f, 0.3f),
+                physicOffset = vec2(0f, -10f * MysticWoods.UNIT_SCALE)
+            )
+            "Slime" -> SpawnConfiguration(
+                AnimationModel.SLIME,
+                physicScaling = vec2(0.3f, 0.3f),
+                physicOffset = vec2(0f, -2f * MysticWoods.UNIT_SCALE)
+            )
+            "Chest" -> SpawnConfiguration(
+                AnimationModel.CHEST,
+                speedScaling = 0f,
+                bodyType = BodyDef.BodyType.StaticBody
+            )
             else -> gdxError("Type $type has no Spawn setup")
         }
     }

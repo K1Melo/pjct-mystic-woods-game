@@ -1,6 +1,7 @@
 package com.github.k1melo.mysticwoods.system
 
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.physics.box2d.World
 import com.github.k1melo.mysticwoods.component.ImageComponent
 import com.github.k1melo.mysticwoods.component.PhysicComponent
@@ -14,7 +15,28 @@ class PhysicSystem (
     private val physicWorld: World,
     private val imageComponent: ComponentMapper<ImageComponent>,
     private val physicComponent: ComponentMapper<PhysicComponent>
-) : IteratingSystem(interval = Fixed(1/60f)) {
+) : ContactListener , IteratingSystem(interval = Fixed(1/60f)) {
+
+    init {
+        physicWorld.setContactListener(this)
+    }
+
+    override fun beginContact(contact: Contact?) {
+
+    }
+
+    override fun endContact(contact: Contact?) {
+
+    }
+
+    private fun Fixture.isStaticBody() = this.body.type == BodyDef.BodyType.StaticBody
+    private fun Fixture.isDynamicBody() = this.body.type == BodyDef.BodyType.DynamicBody
+
+    override fun preSolve(contact: Contact, oldManifold: Manifold) {
+        contact.isEnabled = (contact.fixtureA.isStaticBody() && contact.fixtureB.isDynamicBody()) || (contact.fixtureB.isDynamicBody() && contact.fixtureA.isStaticBody())
+    }
+
+    override fun postSolve(contact: Contact?, impulse: ContactImpulse?) = Unit
 
     override fun onUpdate() {
         if(physicWorld.autoClearForces) {

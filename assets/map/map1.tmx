@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="15">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="18">
  <tileset firstgid="1" name="map" tilewidth="16" tileheight="16" spacing="4" margin="2" tilecount="150" columns="25">
   <image source="map.png" width="512" height="128"/>
  </tileset>
- <tileset firstgid="151" name="entities" tilewidth="48" tileheight="48" tilecount="2" columns="0">
+ <tileset firstgid="151" name="entities" tilewidth="48" tileheight="48" tilecount="3" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="2">
    <image width="48" height="48" source="player/idle_00.png"/>
   </tile>
   <tile id="3">
    <image width="32" height="32" source="slime/idle_00.png"/>
+  </tile>
+  <tile id="4">
+   <image width="16" height="16" source="chest/idle_00.png"/>
   </tile>
  </tileset>
  <layer id="1" name="ground" width="32" height="18">
@@ -34,5 +37,7 @@
   <object id="12" type="Slime" gid="154" x="167" y="108" width="32" height="32"/>
   <object id="13" type="Slime" gid="154" x="313" y="204" width="32" height="32"/>
   <object id="14" type="Slime" gid="154" x="392" y="102" width="32" height="32"/>
+  <object id="15" type="Chest" gid="155" x="400" y="192" width="16" height="16"/>
+  <object id="16" type="Slime" gid="154" x="393" y="213.667" width="32" height="32"/>
  </objectgroup>
 </map>
