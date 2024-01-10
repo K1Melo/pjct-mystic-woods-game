@@ -81,6 +81,10 @@ class EntitySpawnSystem(
                     add<PlayerComponent>()
                 }
 
+                if (config.bodyType != BodyDef.BodyType.StaticBody) {
+                    add<CollisionComponent>()
+                }
+
             }
         }
 

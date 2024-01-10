@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.github.k1melo.mysticwoods.component.*
+import com.github.k1melo.mysticwoods.event.CollisionDespawnEvent
 import com.github.k1melo.mysticwoods.event.MapChangeEvent
 import com.github.k1melo.mysticwoods.event.fire
 import com.github.k1melo.mysticwoods.input.PlayerKeyboardInputProcessor
@@ -40,6 +41,7 @@ class GameScreen : KtxScreen {
 
         system<EntitySpawnSystem>()
         system<CollisionSpawnSystem>()
+        system<CollisionDespawnSystem>()
         system<MoveSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()

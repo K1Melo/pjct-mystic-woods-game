@@ -7,12 +7,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.github.k1melo.mysticwoods.MysticWoods
+import com.github.k1melo.mysticwoods.system.CollisionSpawnSystem
 import com.github.quillraven.fleks.ComponentListener
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.EntityCreateCfg
 import ktx.app.gdxError
 import ktx.box2d.BodyDefinition
 import ktx.box2d.body
+import ktx.box2d.circle
 import ktx.box2d.loop
 import ktx.math.vec2
 
@@ -41,6 +43,9 @@ class PhysicComponent {
                                 vec2(bodyW, bodyH),
                                 vec2(0f, bodyH)
                             )
+                            circle(CollisionSpawnSystem.SPAWN_AREA_SIZE+2f) {
+                                isSensor = true
+                            }
                         }
                     }
                 }
