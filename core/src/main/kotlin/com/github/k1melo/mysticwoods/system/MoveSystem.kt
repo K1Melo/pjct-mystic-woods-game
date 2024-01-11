@@ -1,5 +1,6 @@
 package com.github.k1melo.mysticwoods.system
 
+import com.github.k1melo.mysticwoods.component.ImageComponent
 import com.github.k1melo.mysticwoods.component.MoveComponent
 import com.github.k1melo.mysticwoods.component.PhysicComponent
 import com.github.quillraven.fleks.AllOf
@@ -12,7 +13,8 @@ import ktx.math.component2
 @AllOf([MoveComponent::class, PhysicComponent::class])
 class MoveSystem(
     private val moveComponent: ComponentMapper<MoveComponent>,
-    private val physicComponent: ComponentMapper<PhysicComponent>
+    private val physicComponent: ComponentMapper<PhysicComponent>,
+    private val imageComponent: ComponentMapper<ImageComponent>
 ) : IteratingSystem() {
 
     override fun onTickEntity(entity: Entity) {
@@ -33,5 +35,11 @@ class MoveSystem(
             mass * (moveComponent.speed * moveComponent.cos - velX),
             mass * (moveComponent.speed * moveComponent.sin - velY)
         )
+
+        imageComponent.getOrNull(entity)?.let { imageComponent ->
+            if (moveComponent.cos != 0f) {
+                imageComponent.image.flipX = moveComponent.cos < 0
+            }
+        }
     }
 }

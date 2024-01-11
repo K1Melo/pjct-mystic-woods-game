@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.Scaling
 import com.github.k1melo.mysticwoods.MysticWoods
+import com.github.k1melo.mysticwoods.actor.FlipImage
 import com.github.k1melo.mysticwoods.component.*
 import com.github.k1melo.mysticwoods.component.PhysicComponent.Companion.physicComponentFromImage
 import com.github.k1melo.mysticwoods.event.MapChangeEvent
@@ -41,7 +42,7 @@ class EntitySpawnSystem(
 
             world.entity {
                 val imageComp = add<ImageComponent> {
-                    image = Image().apply {
+                    image = FlipImage().apply {
                         setPosition(location.x, location.y)
                         setSize(relativeSize.x, relativeSize.y)
                         setScaling(Scaling.fill)
