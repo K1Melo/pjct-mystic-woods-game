@@ -2,6 +2,7 @@ package com.github.k1melo.mysticwoods.input
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.github.k1melo.mysticwoods.component.AttackComponent
 import com.github.k1melo.mysticwoods.component.MoveComponent
 import com.github.k1melo.mysticwoods.component.PlayerComponent
 import com.github.quillraven.fleks.ComponentMapper
@@ -11,7 +12,8 @@ import kotlin.math.cos
 
 class PlayerKeyboardInputProcessor(
     world: World,
-    private val moveComponent : ComponentMapper<MoveComponent>,
+    private val moveComponent : ComponentMapper<MoveComponent> = world.mapper(),
+    private val attackComponents : ComponentMapper<AttackComponent> = world.mapper(),
 ) : KtxInputAdapter {
 
     private var playerSeno = 0f
@@ -52,6 +54,15 @@ class PlayerKeyboardInputProcessor(
                 Input.Keys.LEFT -> playerCosseno = -1f
             }
             updatePlayerMovement()
+            return true
+        } else if(keycode == Input.Keys.SPACE) {
+            playerEntities.forEach {
+                with( attackComponents[it]) {
+                    doAttack = true
+                    startAttack()
+                }
+            }
+
             return true
         }
 

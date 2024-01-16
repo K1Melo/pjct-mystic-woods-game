@@ -43,6 +43,9 @@ class GameScreen : KtxScreen {
         system<CollisionSpawnSystem>()
         system<CollisionDespawnSystem>()
         system<MoveSystem>()
+        system<AttackSystem>()
+        system<LifeSystem>()
+        system<DeadSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<CameraSystem>()
@@ -62,7 +65,7 @@ class GameScreen : KtxScreen {
         currentMap = TmxMapLoader().load("map/map1.tmx")
         stage.fire(MapChangeEvent(currentMap!!))
 
-        PlayerKeyboardInputProcessor(entityWorld, entityWorld.mapper())
+        PlayerKeyboardInputProcessor(entityWorld)
     }
 
     override fun resize(width: Int, height: Int) {

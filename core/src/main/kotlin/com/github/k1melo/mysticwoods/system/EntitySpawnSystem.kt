@@ -25,6 +25,8 @@ import ktx.tiled.layer
 import ktx.tiled.type
 import ktx.tiled.x
 import ktx.tiled.y
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 @AllOf([SpawnComponent::class])
 class EntitySpawnSystem(
@@ -56,10 +58,12 @@ class EntitySpawnSystem(
                 physicComponentFromImage(physicWorld, imageComp.image, config.bodyType) { physicComponent, width, height ->
                     val w = width * config.physicScaling.x
                     val h = height * config.physicScaling.y
+                    physicComponent.offset.set(config.physicOffset)
+                    physicComponent.size.set(w, h)
 
                     box(w, h, config.physicOffset) {
                         isSensor = config.bodyType != BodyDef.BodyType.StaticBody
-
+                        userData = HIT_BOX_SENSOR
                     }
 
                     if (config.bodyType != BodyDef.BodyType.StaticBody) {
@@ -75,6 +79,21 @@ class EntitySpawnSystem(
                 if (config.speedScaling > 0f) {
                     add<MoveComponent> {
                         speed = DEFAULT_SPEED * config.speedScaling
+                    }
+                }
+
+                if (config.canAttack) {
+                    add<AttackComponent> {
+                        maxDelay = config.attackDelay
+                        damage = (DEFAULT_ATTACK_DAMAGE * config.attackScaling).roundToInt()
+                        extraRange = config.attackExtraRange
+                    }
+                }
+
+                if (config.lifeScaling > 0f) {
+                    add<LifeComponent> {
+                        max = DEFAULT_LIFE * config.lifeScaling
+                        life = max
                     }
                 }
 
@@ -96,18 +115,23 @@ class EntitySpawnSystem(
         when(type) {
             "Player" -> SpawnConfiguration(
                 AnimationModel.PLAYER,
+                attackExtraRange = 0.6f,
+                attackScaling = 1.25f,
                 physicScaling = vec2(0.3f, 0.3f),
                 physicOffset = vec2(0f, -10f * MysticWoods.UNIT_SCALE)
             )
             "Slime" -> SpawnConfiguration(
                 AnimationModel.SLIME,
+                lifeScaling = 0.75f,
                 physicScaling = vec2(0.3f, 0.3f),
                 physicOffset = vec2(0f, -2f * MysticWoods.UNIT_SCALE)
             )
             "Chest" -> SpawnConfiguration(
                 AnimationModel.CHEST,
                 speedScaling = 0f,
-                bodyType = BodyDef.BodyType.StaticBody
+                bodyType = BodyDef.BodyType.StaticBody,
+                canAttack = false,
+                lifeScaling = 0f
             )
             else -> gdxError("Type $type has no Spawn setup")
         }
@@ -142,5 +166,9 @@ class EntitySpawnSystem(
         }
 
         return false
+    }
+
+    companion object {
+        const val HIT_BOX_SENSOR = "Hitbox"
     }
 }
