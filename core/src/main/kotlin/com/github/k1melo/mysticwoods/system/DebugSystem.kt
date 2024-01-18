@@ -12,7 +12,7 @@ import ktx.graphics.use
 class DebugSystem(
     private val physicWorld: World,
     private val stage : Stage
-) : IntervalSystem(enabled = true) {
+) : IntervalSystem(enabled = false) {
 
     private lateinit var physicRenderer : Box2DDebugRenderer
     private lateinit var shapeRenderer: ShapeRenderer

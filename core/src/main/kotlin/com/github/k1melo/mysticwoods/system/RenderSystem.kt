@@ -10,17 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.github.k1melo.mysticwoods.MysticWoods
 import com.github.k1melo.mysticwoods.component.ImageComponent
 import com.github.k1melo.mysticwoods.event.MapChangeEvent
-import com.github.quillraven.fleks.AllOf
-import com.github.quillraven.fleks.ComponentMapper
-import com.github.quillraven.fleks.Entity
-import com.github.quillraven.fleks.IteratingSystem
+import com.github.quillraven.fleks.*
 import com.github.quillraven.fleks.collection.compareEntity
 import ktx.graphics.use
 import ktx.tiled.forEachLayer
 
 @AllOf([ImageComponent::class])
 class RenderSystem(
-    private val stage: Stage,
+    private val gameStage: Stage,
+    @Qualifier("uiStage") private val uiStage: Stage,
     private val imageComponents: ComponentMapper<ImageComponent>
 ) : EventListener, IteratingSystem(
     comparator = compareEntity {
@@ -30,8 +28,8 @@ class RenderSystem(
 
     private val bgdLayers = mutableListOf<TiledMapTileLayer>()
     private val fgdLayers = mutableListOf<TiledMapTileLayer>()
-    private val mapRenderer = OrthogonalTiledMapRenderer(null, MysticWoods.UNIT_SCALE, stage.batch)
-    private val orthoCam = stage.camera as OrthographicCamera
+    private val mapRenderer = OrthogonalTiledMapRenderer(null, MysticWoods.UNIT_SCALE, gameStage.batch)
+    private val orthoCam = gameStage.camera as OrthographicCamera
 
     override fun handle(event: Event): Boolean {
         when(event) {
@@ -55,14 +53,14 @@ class RenderSystem(
     override fun onTick() {
         super.onTick()
 
-        with(stage) {
+        with(gameStage) {
             viewport.apply()
 
             AnimatedTiledMapTile.updateAnimationBaseTime()
             mapRenderer.setView(orthoCam)
 
             if(bgdLayers.isNotEmpty()) {
-                stage.batch.use(orthoCam.combined) {
+                gameStage.batch.use(orthoCam.combined) {
                     bgdLayers.forEach {
                         mapRenderer.renderTileLayer(it)
                     }
@@ -73,13 +71,19 @@ class RenderSystem(
             draw()
 
             if(fgdLayers.isNotEmpty()) {
-                stage.batch.use(orthoCam.combined) {
+                gameStage.batch.use(orthoCam.combined) {
                     fgdLayers.forEach {
                         mapRenderer.renderTileLayer(it)
                     }
                 }
             }
 
+        }
+
+        with(uiStage) {
+            viewport.apply()
+            act(deltaTime)
+            draw()
         }
     }
     override fun onTickEntity(entity: Entity) {

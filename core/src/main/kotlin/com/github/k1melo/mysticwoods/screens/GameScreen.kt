@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.github.k1melo.mysticwoods.component.*
-import com.github.k1melo.mysticwoods.event.CollisionDespawnEvent
 import com.github.k1melo.mysticwoods.event.MapChangeEvent
 import com.github.k1melo.mysticwoods.event.fire
 import com.github.k1melo.mysticwoods.input.PlayerKeyboardInputProcessor
@@ -22,7 +21,8 @@ import ktx.math.vec2
 
 class GameScreen : KtxScreen {
 
-    private val stage: Stage = Stage(ExtendViewport(16f, 9f))
+    private val gameStage: Stage = Stage(ExtendViewport(16f, 9f))
+    private val uiStage: Stage = Stage(ExtendViewport(1280f, 720f))
     private val textureAtlas: TextureAtlas = TextureAtlas("graphics/gameFrames.atlas")
     private var currentMap : TiledMap? = null;
     private val physicWorld = createWorld(
@@ -32,12 +32,14 @@ class GameScreen : KtxScreen {
     }
 
     private val entityWorld: World = World{
-        inject(stage)
+        inject(gameStage)
+        inject("uiStage", uiStage)
         inject(textureAtlas)
         inject(physicWorld)
 
         componentListener<ImageComponentListener>()
         componentListener<PhysicComponent.Companion.PhysicComponentListener>()
+        componentListener<FloatingTextComponent.Companion.FloatingTextComponentListener>()
 
         system<EntitySpawnSystem>()
         system<CollisionSpawnSystem>()
@@ -49,6 +51,7 @@ class GameScreen : KtxScreen {
         system<PhysicSystem>()
         system<AnimationSystem>()
         system<CameraSystem>()
+        system<FloatingTextSystem>()
         system<RenderSystem>()
         system<DebugSystem>()
     }
@@ -58,18 +61,19 @@ class GameScreen : KtxScreen {
 
         entityWorld.systems.forEach { system ->
             if (system is EventListener) {
-                stage.addListener(system)
+                gameStage.addListener(system)
             }
         }
 
         currentMap = TmxMapLoader().load("map/map1.tmx")
-        stage.fire(MapChangeEvent(currentMap!!))
+        gameStage.fire(MapChangeEvent(currentMap!!))
 
         PlayerKeyboardInputProcessor(entityWorld)
     }
 
     override fun resize(width: Int, height: Int) {
-        stage.viewport.update(width, height, true)
+        gameStage.viewport.update(width, height, true)
+        uiStage.viewport.update(width, height, true)
     }
 
     override fun render(delta: Float) {
@@ -77,7 +81,8 @@ class GameScreen : KtxScreen {
     }
 
     override fun dispose() {
-        stage.disposeSafely()
+        gameStage.disposeSafely()
+        uiStage.disposeSafely()
         textureAtlas.disposeSafely()
         entityWorld.dispose()
         currentMap?.disposeSafely()
