@@ -15,6 +15,8 @@ class AttackSystem(
     private val physicComponents: ComponentMapper<PhysicComponent>,
     private val imageComponents: ComponentMapper<ImageComponent>,
     private val lifeComponents: ComponentMapper<LifeComponent>,
+    private val lootComponents: ComponentMapper<LootComponent>,
+    private val playerComponents: ComponentMapper<PlayerComponent>,
     private val physicWorld : World
 ) : IteratingSystem() {
     override fun onTickEntity(entity: Entity) {
@@ -78,6 +80,12 @@ class AttackSystem(
                 configureEntity(fixtureEntity) {
                     lifeComponents.getOrNull(it)?.let { lifeComponent ->
                         lifeComponent.takeDamage += attackComponent.damage * MathUtils.random(0.9f, 1.1f)
+                    }
+
+                    if (entity in playerComponents) {
+                        lootComponents.getOrNull(it)?.let { lootComponent ->
+                            lootComponent.interactEntity = entity
+                        }
                     }
                 }
 

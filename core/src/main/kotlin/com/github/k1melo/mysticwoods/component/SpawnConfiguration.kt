@@ -20,7 +20,7 @@ data class SpawnConfiguration (
 
     val lifeScaling : Float = 1f,
 
-
+    val lootable : Boolean = false,
     val physicScaling : Vector2 = vec2(1f, 1f),
     val physicOffset : Vector2 = vec2(0f, 0f),
     val bodyType: BodyType = BodyType.DynamicBody

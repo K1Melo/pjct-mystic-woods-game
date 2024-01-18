@@ -6,14 +6,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.Scaling
 import com.github.k1melo.mysticwoods.MysticWoods
 import com.github.k1melo.mysticwoods.actor.FlipImage
 import com.github.k1melo.mysticwoods.component.*
 import com.github.k1melo.mysticwoods.component.PhysicComponent.Companion.physicComponentFromImage
 import com.github.k1melo.mysticwoods.event.MapChangeEvent
-import com.github.k1melo.mysticwoods.screens.GameScreen
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
@@ -101,6 +99,10 @@ class EntitySpawnSystem(
                     add<PlayerComponent>()
                 }
 
+                if (config.lootable) {
+                    add<LootComponent>()
+                }
+
                 if (config.bodyType != BodyDef.BodyType.StaticBody) {
                     add<CollisionComponent>()
                 }
@@ -131,7 +133,8 @@ class EntitySpawnSystem(
                 speedScaling = 0f,
                 bodyType = BodyDef.BodyType.StaticBody,
                 canAttack = false,
-                lifeScaling = 0f
+                lifeScaling = 0f,
+                lootable = true
             )
             else -> gdxError("Type $type has no Spawn setup")
         }
