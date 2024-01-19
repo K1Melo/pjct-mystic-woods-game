@@ -23,7 +23,7 @@ class MoveSystem(
         val mass = physicComponent.body.mass
         val (velX, velY) = physicComponent.body.linearVelocity
 
-        if (moveComponent.cos == 0f && moveComponent.sin == 0f) {
+        if ((moveComponent.cos == 0f && moveComponent.sin == 0f) || moveComponent.root) {
             physicComponent.impulse.set(
                 mass * (0f - velX),
                 mass * (0f - velY),

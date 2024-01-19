@@ -16,6 +16,7 @@ class AttackSystem(
     private val imageComponents: ComponentMapper<ImageComponent>,
     private val lifeComponents: ComponentMapper<LifeComponent>,
     private val lootComponents: ComponentMapper<LootComponent>,
+    private val animationComponents: ComponentMapper<AnimationComponent>,
     private val playerComponents: ComponentMapper<PlayerComponent>,
     private val physicWorld : World
 ) : IteratingSystem() {
@@ -92,8 +93,11 @@ class AttackSystem(
                 return@query true
             }
 
-            attackComponent.state = AttackState.READY
+        }
 
+        val isDone = animationComponents.getOrNull(entity)?.isAnimationDone ?: true
+        if(isDone) {
+            attackComponent.state = AttackState.READY
         }
     }
 

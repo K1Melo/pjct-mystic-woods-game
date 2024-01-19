@@ -59,7 +59,6 @@ class PlayerKeyboardInputProcessor(
             playerEntities.forEach {
                 with( attackComponents[it]) {
                     doAttack = true
-                    startAttack()
                 }
             }
 

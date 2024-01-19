@@ -97,6 +97,7 @@ class EntitySpawnSystem(
 
                 if (type == "Player") {
                     add<PlayerComponent>()
+                    add<StateComponent>()
                 }
 
                 if (config.lootable) {

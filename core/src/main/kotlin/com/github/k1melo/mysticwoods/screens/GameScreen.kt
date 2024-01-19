@@ -40,6 +40,7 @@ class GameScreen : KtxScreen {
         componentListener<ImageComponentListener>()
         componentListener<PhysicComponent.Companion.PhysicComponentListener>()
         componentListener<FloatingTextComponent.Companion.FloatingTextComponentListener>()
+        componentListener<StateComponent.Companion.StateComponentListener>()
 
         system<EntitySpawnSystem>()
         system<CollisionSpawnSystem>()
@@ -51,6 +52,7 @@ class GameScreen : KtxScreen {
         system<LifeSystem>()
         system<PhysicSystem>()
         system<AnimationSystem>()
+        system<StateSystem>()
         system<CameraSystem>()
         system<FloatingTextSystem>()
         system<RenderSystem>()

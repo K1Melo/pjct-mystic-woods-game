@@ -2,6 +2,7 @@ package com.github.k1melo.mysticwoods.system
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -17,6 +18,7 @@ class LifeSystem(
     private val deadComponent: ComponentMapper<DeadComponent>,
     private val playerComponent: ComponentMapper<PlayerComponent>,
     private val physicComponent: ComponentMapper<PhysicComponent>,
+    private val animationComponent: ComponentMapper<AnimationComponent>,
 ) : IteratingSystem() {
 
     private val damageFont = BitmapFont(Gdx.files.internal("damage.fnt"))
@@ -34,6 +36,11 @@ class LifeSystem(
         }
 
         if (lifeComp.isDead) {
+            animationComponent.getOrNull(entity)?.let { animationCmp ->
+                animationCmp.nextAnimation(AnimationType.DEATH)
+                animationCmp.playMode = Animation.PlayMode.NORMAL
+            }
+
             configureEntity(entity) {
                 deadComponent.add(it) {
                     if (it in playerComponent) {
