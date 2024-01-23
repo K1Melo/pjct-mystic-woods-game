@@ -12,8 +12,7 @@ import com.github.quillraven.fleks.IteratingSystem
 @AllOf([DeadComponent::class])
 class DeadSystem(
     private val deadComponent: ComponentMapper<DeadComponent>,
-    private val lifeComponent: ComponentMapper<LifeComponent>,
-    private val stateComponent: ComponentMapper<StateComponent>,
+    private val lifeComponent: ComponentMapper<LifeComponent>
 ) : IteratingSystem() {
     override fun onTickEntity(entity: Entity) {
         val deadComp = deadComponent[entity]
@@ -27,9 +26,6 @@ class DeadSystem(
 
         if (deadComp.reviveTime <= 0f) {
             with(lifeComponent[entity]) {life = max}
-            stateComponent.getOrNull(entity)?.let { stateCmp ->
-                stateCmp.nextState = DefaultState.RESURRECT
-            }
             configureEntity(entity){ deadComponent.remove(entity) }
         }
 

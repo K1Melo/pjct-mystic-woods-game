@@ -53,6 +53,12 @@ enum class DefaultState : EntityState{
         override fun enter(p0: AiEntity) {
             p0.root(true)
         }
+
+        override fun update(p0: AiEntity) {
+            if(!p0.isDead) {
+                p0.state(RESURRECT)
+            }
+        }
     },
     RESURRECT {
         override fun enter(p0: AiEntity) {
