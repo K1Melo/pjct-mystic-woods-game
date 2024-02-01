@@ -56,6 +56,7 @@ class GameScreen : KtxScreen {
         system<CameraSystem>()
         system<FloatingTextSystem>()
         system<RenderSystem>()
+        system<AudioSystem>()
         system<DebugSystem>()
     }
 

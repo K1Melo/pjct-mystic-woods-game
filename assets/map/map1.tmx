@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="18">
+ <properties>
+  <property name="music" value="audio/fields.ogg"/>
+ </properties>
  <tileset firstgid="1" name="map" tilewidth="16" tileheight="16" spacing="4" margin="2" tilecount="150" columns="25">
   <image source="map.png" width="512" height="128"/>
   <tile id="12">

@@ -3,7 +3,10 @@ package com.github.k1melo.mysticwoods.system
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.github.k1melo.mysticwoods.component.*
+import com.github.k1melo.mysticwoods.event.EntityAttackEvent
+import com.github.k1melo.mysticwoods.event.fire
 import com.github.quillraven.fleks.*
 import ktx.box2d.query
 import ktx.math.component1
@@ -18,7 +21,8 @@ class AttackSystem(
     private val lootComponents: ComponentMapper<LootComponent>,
     private val animationComponents: ComponentMapper<AnimationComponent>,
     private val playerComponents: ComponentMapper<PlayerComponent>,
-    private val physicWorld : World
+    private val physicWorld : World,
+    private val stage: Stage,
 ) : IteratingSystem() {
     override fun onTickEntity(entity: Entity) {
         val attackComponent = attackComponents[entity]
@@ -32,6 +36,8 @@ class AttackSystem(
 
             attackComponent.state = AttackState.ATTACKING
             attackComponent.delay = attackComponent.maxDelay
+
+            stage.fire(EntityAttackEvent(animationComponents[entity].model))
 
             return
         }
